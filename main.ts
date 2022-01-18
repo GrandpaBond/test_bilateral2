@@ -1,3 +1,9 @@
+function check () {
+    as5600_read(LLINE)
+    basic.showString("Lmm=" + read_rotation(LLINE) + status_reg + agc_reg)
+    as5600_read(RLINE)
+    basic.showString("Rmm=" + read_rotation(RLINE) + status_reg + agc_reg)
+}
 function start_track () {
     Lmm = 0
     Lstep = 0
@@ -248,21 +254,19 @@ function hex_nibble (nibble: number) {
         return String.fromCharCode(55 + nibble)
     }
 }
-function setup () {
-	
-}
 function Ubyte (val2: number) {
     return (val2 + 256) % 256
 }
-function read_rotation (line4: number) {
+function read_rotation (line: number) {
     // Address switch on 0x70
     // Write 1 byte to  select "line"
     pins.i2cWriteNumber(
     MPX_ADDR,
-    line4,
+    line,
     NumberFormat.Int8LE,
     false
     )
+    basic.pause(1)
     // ??basic.pause(1)
     // Address rotation sensor on 0x36
     // Write 1 byte = 12  to  select RAW register.
@@ -272,11 +276,12 @@ function read_rotation (line4: number) {
     NumberFormat.Int8LE,
     false
     )
+    basic.pause(1)
     // ??basic.pause(1)
     // Address rotation sensor on 0x36
     // Read 2 bytes of RAW rotation.
     // then convert to mm of travel
-    return Uword(pins.i2cReadNumber(AS5600_ADDR, NumberFormat.Int16BE, false)) / TICKS_PER_MM
+    return pins.i2cReadNumber(AS5600_ADDR, NumberFormat.Int16BE, false)
 }
 input.onLogoEvent(TouchButtonEvent.Pressed, function () {
     switch_sides()
@@ -287,8 +292,6 @@ function dial24_flip_xy (xy: number) {
 function hex_byte (byte: number) {
     return "" + hex_nibble(Math.floor(byte / 16)) + hex_nibble(byte % 16)
 }
-let agc_reg = 0
-let status_reg = 0
 let conf_reg = 0
 let error = 0
 let guess = 0
@@ -305,9 +308,10 @@ let Rmm = 0
 let Lstep_was = 0
 let Lstep = 0
 let Lmm = 0
+let agc_reg = 0
+let status_reg = 0
 let JUMP = 0
 let TURN = 0
-let TICKS_PER_MM = 0
 let RLINE = 0
 let LLINE = 0
 let AS5600_ADDR = 0
@@ -316,7 +320,7 @@ MPX_ADDR = 112
 AS5600_ADDR = 54
 LLINE = 7
 RLINE = 1
-TICKS_PER_MM = 71.61
+let TICKS_PER_MM = 71.61
 TURN = 4096 / TICKS_PER_MM
 JUMP = TURN * 0.3
 basic.showIcon(IconNames.Diamond)
@@ -329,6 +333,8 @@ for (let index3 = 0; index3 <= 24; index3++) {
 dial24_finish()
 basic.pause(1000)
 switch_sides()
+start_track()
+check()
 // ??time_update_track()
 loops.everyInterval(40, function () {
     if (active == 1) {
