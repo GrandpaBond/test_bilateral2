@@ -1,5 +1,5 @@
 def check():
-    global LLINE, RLINE
+    global LLINE, RLINE, Lmm, Rmm, status_val, agc_val
     as5600_read(LLINE)
     basic.show_string("Lmm=" + ("" + str(read_rotation(LLINE))) + ("," + ("" + str(status_val))) + ("," + ("" + str(agc_val))))
     as5600_read(RLINE)
