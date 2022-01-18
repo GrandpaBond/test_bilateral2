@@ -1,9 +1,10 @@
 def check():
     global LLINE, RLINE, Lmm, Rmm, status_val, agc_val
+    basic.show_string("L=" + ("" + str(LLINE)) + (",  R=" + ("" + str(RLINE))))
     as5600_read(LLINE)
-    basic.show_string("Lmm=" + ("" + str(read_rotation(LLINE))) + ("," + ("" + str(status_val))) + ("," + ("" + str(agc_val))))
+    basic.show_string("Lmm=" + ("" + str(read_rotation(LLINE))) + (",S=" + ("" + str(status_val))) + (",A=" + ("" + str(agc_val))))
     as5600_read(RLINE)
-    basic.show_string("Rmm=" + ("" + str(read_rotation(RLINE))) + ("," + ("" + str(status_val))) + ("," + ("" + str(agc_val))))
+    basic.show_string("Rmm=" + ("" + str(read_rotation(RLINE))) + (",S=" + ("" + str(status_val))) + (",A=" + ("" + str(agc_val))))
 def start_track():
     global Lmm, Lstep, Lstep_was, Rmm, Rstep, Rstep_was
     Lmm = 0

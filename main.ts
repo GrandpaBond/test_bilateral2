@@ -1,9 +1,10 @@
 function check() {
     
+    basic.showString("L=" + ("" + ("" + LLINE)) + (",  R=" + ("" + ("" + RLINE))))
     as5600_read(LLINE)
-    basic.showString("Lmm=" + ("" + ("" + read_rotation(LLINE))) + ("," + ("" + ("" + status_val))) + ("," + ("" + ("" + agc_val))))
+    basic.showString("Lmm=" + ("" + ("" + read_rotation(LLINE))) + (",S=" + ("" + ("" + status_val))) + (",A=" + ("" + ("" + agc_val))))
     as5600_read(RLINE)
-    basic.showString("Rmm=" + ("" + ("" + read_rotation(RLINE))) + ("," + ("" + ("" + status_val))) + ("," + ("" + ("" + agc_val))))
+    basic.showString("Rmm=" + ("" + ("" + read_rotation(RLINE))) + (",S=" + ("" + ("" + status_val))) + (",A=" + ("" + ("" + agc_val))))
 }
 
 function start_track() {
